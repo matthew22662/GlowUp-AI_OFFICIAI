@@ -28,11 +28,20 @@ function deriveSecret(rootSecret, label) {
 function loadConfig() {
   const nodeEnv = readString("NODE_ENV", "development");
   const isProduction = nodeEnv === "production";
-  const appSecret = readString("APP_SECRET");
-  const adminEmail = normalizeEmail(readString("ADMIN_EMAIL", "admin@glowup.ai"));
-  const adminPassword = readString("ADMIN_PASSWORD");
   const databaseUrl = readString("DATABASE_URL");
+
+  // These defaults make the project start immediately after deployment.
+  // Override them in Render Environment when a persistent database is ready.
+  const appSecret = readString(
+    "APP_SECRET",
+    "GlowUp-AI-2026-default-app-secret-change-after-deploy"
+  );
+  const adminEmail = normalizeEmail(readString("ADMIN_EMAIL", "admin@glowup.ai"));
+  const adminPassword = readString("ADMIN_PASSWORD", "GlowUpAdmin!2026");
   const openaiApiKey = readString("OPENAI_API_KEY");
+
+  const useMemoryDatabase =
+    nodeEnv === "test" || readBool("USE_MEMORY_DATABASE", !databaseUrl);
 
   const config = {
     nodeEnv,
@@ -53,7 +62,7 @@ function loadConfig() {
       .split(",")
       .map((item) => item.trim())
       .filter(Boolean),
-    useMemoryDatabase: nodeEnv === "test" || readBool("USE_MEMORY_DATABASE", false)
+    useMemoryDatabase
   };
 
   const missing = [];
@@ -69,9 +78,9 @@ function loadConfig() {
     throw error;
   }
 
-  config.adminJwtSecret = deriveSecret(appSecret, "glowup-admin-jwt-v5");
-  config.userJwtSecret = deriveSecret(appSecret, "glowup-user-jwt-v5");
-  config.ipHashSecret = deriveSecret(appSecret, "glowup-ip-hash-v5");
+  config.adminJwtSecret = deriveSecret(appSecret, "glowup-admin-jwt-v9");
+  config.userJwtSecret = deriveSecret(appSecret, "glowup-user-jwt-v9");
+  config.ipHashSecret = deriveSecret(appSecret, "glowup-ip-hash-v9");
 
   return Object.freeze(config);
 }

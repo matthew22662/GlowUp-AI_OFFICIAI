@@ -8,7 +8,7 @@ async function createDatabase(config) {
     const memory = newDb({ autoCreateForeignKeyIndices: true });
     const adapter = memory.adapters.createPg();
     const pool = new adapter.Pool();
-    return { pool, mode: "memory-test" };
+    return { pool, mode: config.nodeEnv === "test" ? "memory-test" : "memory-demo" };
   }
 
   const isLocal = /localhost|127\.0\.0\.1/i.test(config.databaseUrl);

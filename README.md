@@ -1,48 +1,33 @@
-# GlowUp AI Production V5
+# GlowUp AI V9
 
-Полноценный Node.js-сервис для Render:
+Полноценное Node.js-приложение с публичным сайтом, кабинетом клиента, административной панелью и анализом фотографий.
 
-- лендинг и вход клиента;
-- защищённая админ-панель `/admin`;
-- личный кабинет `/cabinet`;
-- PostgreSQL: пользователи, профили, анализы и аудит действий;
-- серверный AI-анализ фотографии через OpenAI Responses API;
-- фотографии не сохраняются — в базе остаются только хеш, MIME-тип, размер и результат;
-- пароли хешируются bcrypt;
-- JWT хранится в HttpOnly cookie;
-- rate limiting, Helmet, CSP, health check и миграции при старте.
-
-## Быстрый деплой на Render
-
-Рекомендуемый способ: **New → Blueprint** и выбрать этот GitHub-репозиторий.
-
-Основной `render.yaml` подключает существующую бесплатную базу Render с именем `glowup-ai-db`.
-Во время создания Blueprint Render попросит два секрета:
-
-- `ADMIN_PASSWORD` — придумайте сильный пароль администратора;
-- `OPENAI_API_KEY` — настоящий серверный API-ключ OpenAI.
-
-`APP_SECRET` создаётся Render автоматически. `DATABASE_URL` берётся из базы автоматически.
-
-Если свободной базы ещё нет, переименуйте `render-create-new-database.yaml` в `render.yaml` перед первым деплоем.
-
-## Адреса
-
-- `/` — основной сайт
-- `/admin` — админка
-- `/cabinet` — кабинет клиента
-- `/onboarding` — анкета и анализ фото
-- `/health` — проверка сервера, базы и AI
-
-## Локальная проверка
+## Быстрый запуск
 
 ```bash
 npm install
-npm run check
-npm test
 npm start
 ```
 
-## Важно
+При отсутствии `DATABASE_URL` приложение автоматически использует демонстрационную базу данных в памяти и не завершает запуск с ошибкой `CONFIG_MISSING`.
 
-AI работает только после добавления `OPENAI_API_KEY`. Ключ нельзя размещать в HTML, JavaScript браузера или GitHub.
+## Администратор по умолчанию
+
+- URL: `/admin`
+- Email: `admin@glowup.ai`
+- Password: `GlowUpAdmin!2026`
+
+Настройки можно заменить через переменные окружения `ADMIN_EMAIL`, `ADMIN_PASSWORD` и `APP_SECRET`.
+
+## Постоянная база данных
+
+Для сохранения пользователей после перезапуска укажите PostgreSQL URL в `DATABASE_URL` и установите `USE_MEMORY_DATABASE=false`.
+
+## Render
+
+- Build Command: `npm install --omit=dev`
+- Start Command: `npm start`
+- Root Directory: пусто
+- Health Check Path: `/health`
+
+`render.yaml` уже настроен для первого запуска без внешней базы.

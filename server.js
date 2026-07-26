@@ -16,7 +16,7 @@ async function start() {
       level: "info",
       event: "server_ready",
       app: config.appName,
-      version: "5.0.1",
+      version: "9.0.0",
       port: config.port,
       databaseMode: runtime.databaseMode,
       aiEnabled: runtime.aiEnabled,
