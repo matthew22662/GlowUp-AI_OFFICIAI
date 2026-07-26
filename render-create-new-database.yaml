@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: glowup-ai-production
+    runtime: node
+    plan: free
+    region: virginia
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: glowup-ai-production-db
+          property: connectionString
+      - key: APP_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@glowup.ai
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_VISION_MODEL
+        value: gpt-5-mini
+      - key: REQUIRE_AI
+        value: "true"
+
+databases:
+  - name: glowup-ai-production-db
+    plan: free
+    region: virginia
+    postgresMajorVersion: "18"

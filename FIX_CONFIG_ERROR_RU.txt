@@ -1,0 +1,17 @@
+ИСПРАВЛЕНО: Error: Cannot find module './src/config'
+
+Что изменено:
+1. config.js, app.js, db.js, errors.js и migrations.js перенесены в корень проекта.
+2. server.js теперь подключает ./config и ./app без папки src.
+3. Исправлен путь к папке public.
+4. Обновлены команды проверки и smoke-тест.
+5. Дизайн и тексты сайта не менялись.
+
+Как загрузить в GitHub:
+- Распакуйте ZIP.
+- Загрузите ВСЕ файлы ИЗНУТРИ папки в корень репозитория.
+- В корне GitHub должны быть видны: server.js, config.js, app.js, package.json, render.yaml и папка public.
+- Не загружайте саму внешнюю папку как дополнительный уровень вложенности.
+
+Команда запуска в Render: npm start
+Root Directory в Render: оставить пустым.

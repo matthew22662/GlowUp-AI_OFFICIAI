@@ -1,0 +1,30 @@
+{
+  "name": "glowup-ai-production",
+  "version": "5.0.1",
+  "private": true,
+  "description": "Production-ready GlowUp AI: admin panel, secure client cabinet, PostgreSQL and server-side OpenAI photo analysis.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check app.js && node --check config.js && node --check db.js && node --check errors.js && node --check migrations.js && node --check public/site.js && node --check public/admin.js && node --check public/dashboard.js && node --check public/onboarding.js",
+    "test": "node tests/smoke.js",
+    "hash-password": "node scripts/hash-password.js"
+  },
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "openai": "^6.49.0",
+    "pg": "^8.16.3",
+    "pg-mem": "^3.0.5"
+  }
+}
